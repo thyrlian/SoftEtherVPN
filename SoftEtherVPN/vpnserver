@@ -1,0 +1,28 @@
+#!/bin/sh
+
+DAEMON=/usr/local/vpnserver/vpnserver
+LOCK_DIR=/var/lock/subsys
+LOCK=$LOCK_DIR/vpnserver
+mkdir -p /var/lock/subsys
+test -x $DAEMON || exit 0
+case "$1" in
+start)
+$DAEMON start
+touch $LOCK
+;;
+stop)
+$DAEMON stop
+rm $LOCK
+;;
+restart)
+$DAEMON stop
+rm $LOCK
+sleep 3
+$DAEMON start
+touch $LOCK
+;;
+*)
+echo "Usage: $0 { start | stop | restart }"
+exit 1
+esac
+exit 0
