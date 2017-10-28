@@ -24,6 +24,8 @@ RUN apt-get update -y && \
     chmod 700 vpnserver vpncmd
 
 ADD vpnserver /etc/init.d/
-RUN chmod 755 /etc/init.d/vpnserver
+ADD vpnconfig.sh /usr/local/vpnserver
+RUN chmod 755 /etc/init.d/vpnserver && \
+    chmod 755 /usr/local/vpnserver/vpnconfig.sh
 
 EXPOSE 443/tcp 500/udp 992/tcp 1194/tcp 1194/udp 1701/tcp 4500/udp 5555/tcp
